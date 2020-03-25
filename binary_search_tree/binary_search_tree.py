@@ -12,19 +12,17 @@ class BinarySearchTree:
 
     # Insert the given value into the tree
     def insert(self, value):
-        if value < self.value and not self.left:
-            self.left = BinarySearchTree(value)
-            return
+        if value < self.value:
+            if self.left:
+                self.left.insert(value)
+            else:
+                self.left = BinarySearchTree(value)
 
-        elif value >= self.value and not self.right:
-            self.right = BinarySearchTree(value)
-            return
-
-        if value < self.value and self.left:
-            return self.left.insert(value)
-
-        else: 
-            return self.right.insert(value)
+        else:
+            if self.right:
+                self.right.insert(value)
+            else:
+                self.right = BinarySearchTree(value)
 
     # Return True if the tree contains the value
     # False if it does not
@@ -32,18 +30,17 @@ class BinarySearchTree:
         if self.value == target:
             return True
 
-        if target < self.value and not self.left:
-            return False
-
-        if target >= self.value and not self.right:
-            return False
-        
-        if target < self.value and self.left:
-            return self.left.contains(target)
+        if target < self.value:
+            if self.left:
+                return self.left.contains(target)
+            else:
+                return False
 
         else:
-            return self.right.contains(target)
-
+            if self.right:
+                return self.right.contains(target)
+            else:
+                return False
 
     # Return the maximum value found in the tree
     def get_max(self):
